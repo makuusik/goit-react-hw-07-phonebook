@@ -22,14 +22,16 @@ const ContactForm = () => {
     if (!name || !number) {
       return;
     }
-    if (
-      contacts.some(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
+
+    const existingContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (existingContact) {
       setDuplicateError(`Контакт с именем "${name}" уже существует!`);
       return;
     }
+
     setDuplicateError(null);
 
     const validNumber = /^[0-9+-]+$/.test(number);
@@ -53,7 +55,7 @@ const ContactForm = () => {
       const data = await response.json();
       dispatch(addContact(data));
     } else {
-      console.error('Не удалось добавить контакт');
+      console.error('Ошибка в добавлении контакта');
     }
 
     setName('');

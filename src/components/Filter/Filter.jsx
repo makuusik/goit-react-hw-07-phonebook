@@ -18,7 +18,7 @@ const Filter = () => {
         type="text"
         value={filter}
         onChange={handleFilterChange}
-        placeholder="Filter contacts by name"
+        placeholder="Фильтр контактов по имени"
       />
     </label>
   );

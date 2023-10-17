@@ -13,32 +13,20 @@ const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleDeleteContact = async id => {
-    const response = await fetch(
-      `https://652a7f1f4791d884f1fcff54.mockapi.io/contacts/${id}`,
-      {
-        method: 'DELETE',
-      }
-    );
-
-    if (response.ok) {
-      dispatch(deleteContact(id));
-    } else {
-      console.error('Не удалось удалить контакт');
-    }
+  const handleDeleteContact = id => {
+    dispatch(deleteContact(id));
   };
-  const filteredContacts = filter
-    ? contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : contacts;
+
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div>
       {isLoading ? (
         <p>Загрузка...</p>
       ) : error ? (
-        <p>Произошла ошибка: {error}</p>
+        <p>Ошибка: {error}</p>
       ) : (
         <ul>
           {filteredContacts && filteredContacts.length > 0 ? (

@@ -7,14 +7,14 @@ import Filter from './Filter/Filter';
 
 const App = () => {
   // const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.contacts);
-  // const filter = useSelector((state) => state.contacts.filter);
+  const contacts = useSelector(state => state.contacts.contacts);
+  // const filter = useSelector(state => state.contacts.filter);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  // const handleFilterChange = (value) => {
+  // const handleFilterChange = value => {
   //   dispatch(setFilter(value));
   // };
 

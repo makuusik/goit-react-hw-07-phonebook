@@ -4,25 +4,29 @@ import { addContact } from '../redux/contactsSlice';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
+  const contacts = useSelector(state => state.contacts.items);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [duplicateError, setDuplicateError] = useState(null);
 
-  const handleNumberChange = (e) => {
+  const handleNumberChange = e => {
     let value = e.target.value;
     value = value.replace(/[^0-9+-]/g, '');
     setNumber(value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     if (!name || !number) {
       return;
     }
-    if (contacts.some((contact) => contact.name.toLowerCase() === name.toLowerCase())) {
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
       setDuplicateError(`Контакт с именем "${name}" уже существует!`);
       return;
     }
@@ -34,13 +38,16 @@ const ContactForm = () => {
       return;
     }
 
-    const response = await fetch('https://652a7f1f4791d884f1fcff54.mockapi.io/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, number }),
-    });
+    const response = await fetch(
+      'https://652a7f1f4791d884f1fcff54.mockapi.io/contacts',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, number }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -62,7 +69,7 @@ const ContactForm = () => {
           type="text"
           name="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={e => setName(e.target.value)}
           required
         />
       </label>

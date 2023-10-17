@@ -4,9 +4,9 @@ import { setFilter } from '../redux/contactsSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.contacts.filter);
+  const filter = useSelector(state => state.contacts.filter);
 
-  const handleFilterChange = (event) => {
+  const handleFilterChange = event => {
     const value = event.target.value;
     dispatch(setFilter(value.trim()));
   };

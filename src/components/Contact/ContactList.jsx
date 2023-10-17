@@ -4,19 +4,22 @@ import { deleteContact, fetchContacts } from '../redux/contactsSlice';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
-  const filter = useSelector((state) => state.contacts.filter);
-  const isLoading = useSelector((state) => state.contacts.isLoading);
-  const error = useSelector((state) => state.contacts.error);
+  const contacts = useSelector(state => state.contacts.items);
+  const filter = useSelector(state => state.contacts.filter);
+  const isLoading = useSelector(state => state.contacts.isLoading);
+  const error = useSelector(state => state.contacts.error);
 
   React.useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleDeleteContact = async (id) => {
-    const response = await fetch(`https://652a7f1f4791d884f1fcff54.mockapi.io/contacts/${id}`, {
-      method: 'DELETE',
-    });
+  const handleDeleteContact = async id => {
+    const response = await fetch(
+      `https://652a7f1f4791d884f1fcff54.mockapi.io/contacts/${id}`,
+      {
+        method: 'DELETE',
+      }
+    );
 
     if (response.ok) {
       dispatch(deleteContact(id));
@@ -24,9 +27,11 @@ const ContactList = () => {
       console.error('Не удалось удалить контакт');
     }
   };
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredContacts = filter
+    ? contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+      )
+    : contacts;
 
   return (
     <div>
@@ -37,10 +42,13 @@ const ContactList = () => {
       ) : (
         <ul>
           {filteredContacts && filteredContacts.length > 0 ? (
-            filteredContacts.map((contact) => (
+            filteredContacts.map(contact => (
               <li key={contact.id}>
                 {contact.name}: {contact.number}
-                <button type="button" onClick={() => handleDeleteContact(contact.id)}>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteContact(contact.id)}
+                >
                   Удалить
                 </button>
               </li>
